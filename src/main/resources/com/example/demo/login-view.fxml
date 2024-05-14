@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="600.0" style="-fx-pref-width: 900; -fx-pref-height: 700;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.SwitchToSignUpController">
+   <ListView prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: #252E40;" />
+   <ListView layoutX="400.0" prefHeight="700.0" prefWidth="500.0" style="-fx-background-color: #F2F2F2;" />
+   <Label layoutX="104.0" layoutY="270.0" text="TaskSync" textFill="#f2f2f2">
+      <font>
+         <Font size="48.0" />
+      </font>
+   </Label>
+   <Label layoutX="10.0" layoutY="372.0" text="Sync Your Tasks, Sync Your Success!" textFill="#f2f2f2">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="530.0" layoutY="94.0" lineSpacing="1.0" prefHeight="117.0" prefWidth="245.0" text="Welcome to TaskSync Your Ultimate Task Management Solution!" textAlignment="CENTER" textFill="#252e40" textOverrun="CLIP" wrapText="true">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="432.0" layoutY="250.0" text="E-mail address:" textFill="#252e40">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField layoutX="432.0" layoutY="290.0" prefHeight="30.0" prefWidth="441.0" />
+   <Label layoutX="432.0" layoutY="340.0" text="Password:" textFill="#252e40">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Button layoutX="603.0" layoutY="441.0" mnemonicParsing="false" style="-fx-background-color: #252E40;" text="Log In" textFill="#f2f2f2">
+      <font>
+         <Font size="24.0" />
+      </font>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+   <PasswordField layoutX="432.0" layoutY="375.0" prefHeight="30.0" prefWidth="441.0" />
+   <Button layoutX="525.0" layoutY="546.0" mnemonicParsing="false" onAction="#switchToSignUp" style="-fx-background-color: transparent;" text="Don't have an account? Sign Up now!" textFill="#252e40">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+</Pane>

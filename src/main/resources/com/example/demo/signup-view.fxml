@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="600.0" style="-fx-pref-width: 900; -fx-pref-height: 700;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: #252E40;" />
+    <ListView layoutX="400.0" prefHeight="700.0" prefWidth="500.0" style="-fx-background-color: #F2F2F2;" />
+    <Label layoutX="104.0" layoutY="270.0" text="TaskSync" textFill="#f2f2f2">
+        <font>
+            <Font size="48.0" />
+        </font>
+    </Label>
+    <Label layoutX="10.0" layoutY="372.0" text="Sync Your Tasks, Sync Your Success!" textFill="#f2f2f2">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </Label>
+   <Label text="Ready to supercharge your productivity? Sign in now!" />
+   <Label layoutX="460.0" layoutY="66.0" text="Ready to take charge? Sign up now!" textFill="#252e40">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label layoutX="440.0" layoutY="151.0" text="E-mail:" textFill="#252e40">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField layoutX="439.0" layoutY="186.0" prefHeight="30.0" prefWidth="421.0" />
+   <Label layoutX="441.0" layoutY="237.0" text="Username:" textFill="#252e40">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField layoutX="439.0" layoutY="270.0" prefHeight="30.0" prefWidth="421.0" />
+   <Label layoutX="439.0" layoutY="323.0" text="Password:" textFill="#252e40">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField layoutX="439.0" layoutY="357.0" prefHeight="30.0" prefWidth="421.0" />
+   <Label layoutX="439.0" layoutY="407.0" text="Repeat password:" textFill="#252e40">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <TextField layoutX="438.0" layoutY="440.0" prefHeight="30.0" prefWidth="421.0" />
+   <Button layoutX="587.0" layoutY="507.0" mnemonicParsing="false" style="-fx-background-color: #252E40;" text="Sign Up!" textFill="#f2f2f2">
+      <font>
+         <Font size="24.0" />
+      </font>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor></Button>
+   <Button layoutX="539.0" layoutY="599.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Already have an account? Log In!" textFill="#252e40">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </Button>
+</Pane>
