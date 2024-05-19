@@ -10,8 +10,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBUtils {
+
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/tasksync";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "";
+
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String role) {
         Parent root = null;
 
@@ -19,8 +26,8 @@ public class DBUtils {
             try {
                 FXMLLoader loader = new FXMLLoader((DBUtils.class.getResource(fxmlFile)));
                 root = loader.load();
-                LoggedInController loggedInController = loader.getController();
-                loggedInController.setUserInformation(username, role);
+                MainController mainController = loader.getController();
+                mainController.setUserInformation(username);
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -46,7 +53,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tasksync", "root", "");
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
             psCheckUserExists.setString(1, username);
             resultSet = psCheckUserExists.executeQuery();
@@ -64,7 +71,7 @@ public class DBUtils {
                 psInsert.setString(3, role);
                 psInsert.executeUpdate();
 
-                changeScene(event, "main-view.fxml", "Welcome to TaskSync", username, role);
+                changeScene(event, "main-manager-view.fxml", "Welcome to TaskSync", username, role);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,7 +116,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tasksync", "root", "");
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             preparedStatement =connection.prepareStatement("SELECT password, role FROM users WHERE username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -125,8 +132,15 @@ public class DBUtils {
                     String retrievedPassword = resultSet.getString("password");
                     String retrievedRole = resultSet.getString("role");
 
+                    System.out.println(retrievedRole);
+
                     if (retrievedPassword.equals(password)) {
-                        changeScene(event, "main-view.fxml", "Welcome", username, retrievedRole);
+                        if (retrievedRole.equals("Manager")) {
+                            changeScene(event, "main-manager-view.fxml", "Welcome manager!", username, retrievedRole);
+                        }
+                        if (retrievedRole.equals(("Worker"))) {
+                            changeScene(event, "main-worker-view.fxml", "Welcome worker!", username, retrievedRole);
+                        }
                     } else {
                         System.out.println("Passwords did not match");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -162,5 +176,21 @@ public class DBUtils {
                 }
             }
         }
+    }
+
+    public static List<Task> getTasks(int offset, int limit) throws SQLException {
+        List<Task> tasks = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             Statement statement = connection.createStatement()) {
+            String query = "SELECT * FROM users LIMIT " +offset+", "+limit;
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                String uname = resultSet.getString("username");
+                String urole = resultSet.getString("role");
+                tasks.add(new Task(uname, urole));
+            }
+        }
+        return tasks;
     }
 }

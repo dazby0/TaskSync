@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MainController">
+   <children>
+      <ListView prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: #252E40;" />
+      <ListView layoutX="400.0" prefHeight="700.0" prefWidth="500.0" style="-fx-background-color: #f2f2f2;" />
+      <Button fx:id="btn_logout" layoutX="156.0" layoutY="628.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Log Out">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Label fx:id="label_welcome" layoutX="14.0" layoutY="40.0" text="Hello!" textFill="#f2f2f2">
+         <font>
+            <Font size="36.0" />
+         </font></Label>
+      <Button fx:id="btn_tasks" layoutX="155.0" layoutY="210.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Tasks" textAlignment="CENTER" textFill="#252e40">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btn_teams" layoutX="149.0" layoutY="325.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Teams" textFill="#252e40">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btn_raports" layoutX="143.0" layoutY="443.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Raports" textFill="#252e40">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="616.0" layoutY="23.0" text="TASKS" textFill="#252e40">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_addTask" layoutX="803.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: #252E40;" text="ADD TASK" textFill="#f2f2f2">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+<!--      <VBox layoutX="400.0" layoutY="93.0" prefHeight="609.0" prefWidth="500.0" style="-fx-background-color: #f2f2f2;">-->
+<!--         <padding>-->
+<!--            <Insets bottom="10" left="10" right="10" top="10" />-->
+<!--         </padding>-->
+
+<!--         <FlowPane fx:id="tasksContainer" hgap="10" prefHeight="300" prefWidth="600" vgap="10" />-->
+<!--         <FlowPane alignment="CENTER">-->
+<!--            <Button onAction="#prevPage" text="Previous" />-->
+<!--            <Button onAction="#nextPage" text="Next" />-->
+<!--         </FlowPane>-->
+<!--      </VBox>-->
+   </children>
+</Pane>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #252E40;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="280.0" layoutY="74.0" text="ADD NEW TASK" textFill="#f2f2f2">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="108.0" layoutY="231.0" text="Title:*" textFill="#f2f2f2">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_taskTitle" layoutX="313.0" layoutY="231.0" prefHeight="39.0" prefWidth="465.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="52.0" layoutY="332.0" text="Assigned To:" textFill="#f2f2f2">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cb_assignedTo" layoutX="313.0" layoutY="344.0" prefHeight="30.0" prefWidth="465.0" style="-fx-background-color: #f2f2f2;" />
+      <Button fx:id="btn_addTask" layoutX="671.0" layoutY="429.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="ADD TASK">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_switchToMain" layoutX="564.0" layoutY="429.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="UNDO">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #f2f2f2;" />
+   </children>
+</Pane>

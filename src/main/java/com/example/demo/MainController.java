@@ -10,10 +10,12 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoggedInController implements Initializable {
+public class MainController implements Initializable {
 
     @FXML
     private Button btn_logout;
+    @FXML
+    private Button btn_addTask;
 
     @FXML
     private Label label_welcome;
@@ -29,10 +31,16 @@ public class LoggedInController implements Initializable {
                 DBUtils.changeScene(event, "login-view.fxml", "Log In to TaskSync!", null, null);
             }
         });
+
+        btn_addTask.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "addTask-view.fxml", "Add new Task!", null, null);
+            }
+        });
     }
 
-    public void setUserInformation(String username, String role) {
-        label_welcome.setText("Welcome " + username);
-        label_role.setText("Your role is:");
+    public void setUserInformation(String username) {
+        label_welcome.setText("Hello " + username + "!");
     }
 }
