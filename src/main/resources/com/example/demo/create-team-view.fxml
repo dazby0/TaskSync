@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #252E40;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.CreateTeamController">
+   <children>
+      <Label layoutX="241.0" layoutY="47.0" text="CREATE NEW TEAM" textFill="#f2f2f2">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #F2F2F2;" />
+      <Label layoutX="47.0" layoutY="163.0" text="Team name:*" textFill="#f2f2f2">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <TextField layoutX="332.0" layoutY="164.0" prefHeight="51.0" prefWidth="445.0" style="-fx-background-color: #f2f2f2;">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <Label layoutX="47.0" layoutY="269.0" text="Add workers:*" textFill="#f2f2f2">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cb_workers" layoutX="332.0" layoutY="277.0" prefHeight="38.0" prefWidth="445.0" promptText="Load Workers..." />
+      <Label fx:id="label_addedWorkers" layoutX="47.0" layoutY="368.0" prefHeight="120.0" prefWidth="800.0" textFill="#f2f2f2">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button fx:id="btn_createTeam" layoutX="630.0" layoutY="506.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="CREATE TEAM">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btn_switchToTeamsView" layoutX="490.0" layoutY="506.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="BACK">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btn_loadWorkers" layoutX="788.0" layoutY="281.0" mnemonicParsing="false" text="Load Workers" />
+      <Label layoutX="47.0" layoutY="506.0" text="Click on label to remove user" textFill="#f2f2f2" />
+   </children>
+</Pane>

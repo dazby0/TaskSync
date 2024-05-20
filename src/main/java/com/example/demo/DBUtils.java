@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,38 +78,6 @@ public class DBUtils {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (psCheckUserExists != null) {
-                try {
-                    psCheckUserExists.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (psInsert != null) {
-                try {
-                    psInsert.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
@@ -117,7 +88,7 @@ public class DBUtils {
 
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement =connection.prepareStatement("SELECT password, role FROM users WHERE username = ?");
+            preparedStatement = connection.prepareStatement("SELECT password, role FROM users WHERE username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
 
@@ -126,8 +97,7 @@ public class DBUtils {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Provided credentials are incorrect");
                 alert.show();
-            }
-            else {
+            } else {
                 while (resultSet.next()) {
                     String retrievedPassword = resultSet.getString("password");
                     String retrievedRole = resultSet.getString("role");
@@ -151,46 +121,58 @@ public class DBUtils {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
-    public static List<Task> getTasks(int offset, int limit) throws SQLException {
-        List<Task> tasks = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             Statement statement = connection.createStatement()) {
-            String query = "SELECT * FROM users LIMIT " +offset+", "+limit;
-            ResultSet resultSet = statement.executeQuery(query);
+    public static ObservableList<String> loadWorkers() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ObservableList data = FXCollections.observableArrayList();
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement("SELECT username FROM users WHERE role = 'Worker'");
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String uname = resultSet.getString("username");
-                String urole = resultSet.getString("role");
-                tasks.add(new Task(uname, urole));
+                data.add(new String(resultSet.getString(1)));
             }
         }
-        return tasks;
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public static void addTask(ActionEvent event, String username, String taskTitle) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        try {
+            if (!taskTitle.isEmpty()) {
+                connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                preparedStatement = connection.prepareStatement("INSERT INTO tasks (status, assigned_to, start_date, task_title) VALUES (?, ?, ?, ?)");
+                preparedStatement.setString(1, "In progres...");
+                preparedStatement.setString(2, username);
+                preparedStatement.setObject(3, currentDateTime);
+                preparedStatement.setString(4, taskTitle);
+                preparedStatement.executeUpdate();
+
+                changeScene(event, "main-manager-view.fxml", "Welcome Manager!", null, null);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Added new Task!");
+                alert.show();
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Set the task title!");
+                alert.show();
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

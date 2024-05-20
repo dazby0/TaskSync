@@ -29,7 +29,7 @@
          <Font size="24.0" />
       </font>
       <cursor>
-         <Cursor fx:constant="OPEN_HAND" />
+         <Cursor fx:constant="HAND" />
       </cursor>
    </Button>
    <Label layoutX="432.0" layoutY="250.0" text="Username:" textFill="#252e40">

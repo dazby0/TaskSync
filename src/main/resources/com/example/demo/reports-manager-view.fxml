@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #252E40;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ReportsManagerController">
+   <children>
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #f2f2f2;" />
+      <Label layoutX="67.0" layoutY="30.0" text="Average time of workers to complete a task" textFill="#f2f2f2">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_switchToMain" layoutX="818.0" layoutY="542.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="BACK">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>

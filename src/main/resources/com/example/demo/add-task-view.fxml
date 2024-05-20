@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #252E40;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #252E40;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.AddTaskController">
    <children>
       <Label layoutX="280.0" layoutY="74.0" text="ADD NEW TASK" textFill="#f2f2f2">
          <font>
@@ -27,7 +27,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cb_assignedTo" layoutX="313.0" layoutY="344.0" prefHeight="30.0" prefWidth="465.0" style="-fx-background-color: #f2f2f2;" />
+      <ComboBox fx:id="cb_assignedTo" layoutX="313.0" layoutY="344.0" prefHeight="30.0" prefWidth="465.0" promptText="Loading workers..." style="-fx-background-color: #f2f2f2;" />
       <Button fx:id="btn_addTask" layoutX="671.0" layoutY="429.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="ADD TASK">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -36,11 +36,19 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="btn_switchToMain" layoutX="564.0" layoutY="429.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="UNDO">
+      <Button fx:id="btn_switchToMain" layoutX="585.0" layoutY="429.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="BACK">
          <font>
             <Font size="18.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #f2f2f2;" />
+      <Button fx:id="btn_loadWorkers" layoutX="789.0" layoutY="344.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Load Workers">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </Pane>

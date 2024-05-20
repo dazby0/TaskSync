@@ -11,11 +11,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-
     @FXML
     private Button btn_logout;
     @FXML
     private Button btn_addTask;
+    @FXML
+    private Button btn_switchToTeams;
+    @FXML
+    private Button btn_switchToReports;
 
     @FXML
     private Label label_welcome;
@@ -35,7 +38,21 @@ public class MainController implements Initializable {
         btn_addTask.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "addTask-view.fxml", "Add new Task!", null, null);
+                DBUtils.changeScene(event, "add-task-view.fxml", "Add new Task!", null, null);
+            }
+        });
+
+        btn_switchToTeams.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "teams-manager-view.fxml", "Your teams!", null, null);
+            }
+        });
+
+        btn_switchToReports.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "reports-manager-view.fxml", "View Reports!", null, null);
             }
         });
     }

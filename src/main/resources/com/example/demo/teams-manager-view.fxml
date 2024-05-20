@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TeamsController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="TEAMS" textFill="#252e40">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_createTeam" layoutX="704.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #252E40;" text="CREATE TEAM" textFill="#f2f2f2">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #252E40;" />
+      <Button fx:id="btn_switchToMain" layoutX="795.0" layoutY="536.0" mnemonicParsing="false" style="-fx-background-color: #252E40;" text="BACK" textFill="#f2f2f2">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</Pane>
