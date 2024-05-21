@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBUtils {
 
@@ -168,6 +166,29 @@ public class DBUtils {
             else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Set the task title!");
+                alert.show();
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createTeam(ActionEvent event, String managerName, String workers) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            if (!workers.isEmpty()) {
+                connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                preparedStatement = connection.prepareStatement("INSERT INTO teams (manager, workers) VALUES (?, ?)");
+                preparedStatement.setString(1, managerName);
+                preparedStatement.setString(2, workers);
+                preparedStatement.executeUpdate();
+
+                changeScene(event, "teams-manager-view.fxml", "Check Your Teams!", managerName, null);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Created new Team!");
                 alert.show();
             }
         }

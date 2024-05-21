@@ -60,4 +60,10 @@ public class MainController implements Initializable {
     public void setUserInformation(String username) {
         label_welcome.setText("Hello " + username + "!");
     }
+
+//    public String getUsername( ) {
+//        String workingString = label_welcome.getText();
+//        String[] parts = workingString.split(" ");
+//        return parts[2];
+//    }
 }

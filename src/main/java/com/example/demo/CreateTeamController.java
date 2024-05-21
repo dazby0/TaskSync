@@ -20,6 +20,10 @@ public class CreateTeamController implements Initializable {
     private Button btn_createTeam;
     @FXML
     private Button btn_loadWorkers;
+    @FXML
+    private Button btn_addWorkerToTeam;
+    @FXML
+    private Button btn_clearWorkers;
 
     @FXML
     private ComboBox<String> cb_workers;
@@ -27,15 +31,9 @@ public class CreateTeamController implements Initializable {
     @FXML
     private Label label_addedWorkers;
 
-    private ObservableList<String> availableUsers;
-    private ObservableList<String> disabledUsers;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        availableUsers = FXCollections.observableArrayList();
-        disabledUsers = FXCollections.observableArrayList();
-
-        cb_workers.setItems(availableUsers);
         cb_workers.setPromptText("Show Workers:");
 
         btn_switchToTeamsView.setOnAction(new EventHandler<ActionEvent>() {
@@ -48,27 +46,37 @@ public class CreateTeamController implements Initializable {
         btn_loadWorkers.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                availableUsers.setAll(DBUtils.loadWorkers());
-                cb_workers.setItems(availableUsers);
+                cb_workers.setItems(DBUtils.loadWorkers());
             }
         });
 
-        cb_workers.setOnAction(event -> {
-            String selectedItem = cb_workers.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                label_addedWorkers.setText(selectedItem);
-                availableUsers.remove(selectedItem);
-                disabledUsers.add(selectedItem);
-                cb_workers.getSelectionModel().clearSelection();
+        btn_addWorkerToTeam.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String username = cb_workers.getValue();
+                String labelText = label_addedWorkers.getText();
+                if (labelText.isEmpty()) {
+                    label_addedWorkers.setText(username);
+                }
+                else {
+                    label_addedWorkers.setText(labelText + ", " + username);
+                }
+                cb_workers.getItems().remove(username);
             }
         });
 
-        label_addedWorkers.setOnMouseClicked(event -> {
-            String selectedItemText = label_addedWorkers.getText();
-            if (selectedItemText != null && !selectedItemText.isEmpty()) {
-                availableUsers.add(selectedItemText);
-                disabledUsers.remove(selectedItemText);
+        btn_clearWorkers.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                cb_workers.setItems(DBUtils.loadWorkers());
                 label_addedWorkers.setText("");
+            }
+        });
+
+        btn_createTeam.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.createTeam(event, "manager", label_addedWorkers.getText());
             }
         });
     }
