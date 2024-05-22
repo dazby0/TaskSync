@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.Utils.DBUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,7 +37,7 @@ public class LogInConroller implements Initializable {
         btn_switchToSignUp.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "signup-view.fxml", "Sign Up!", null, null);
+                DBUtils.changeScene(event, "signup-view.fxml", "Sign Up!", null);
             }
         });
     }

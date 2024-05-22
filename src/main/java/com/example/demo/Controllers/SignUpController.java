@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.Utils.DBUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ public class SignUpController implements Initializable {
         radio_manager.setToggleGroup(toggleGroup);
         radio_worker.setToggleGroup(toggleGroup);
 
-        radio_manager.setSelected(true);
+        radio_worker.setSelected(true);
 
         btn_signup.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -42,8 +43,7 @@ public class SignUpController implements Initializable {
 
                 if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
                     DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), toggleName);
-                }
-                else {
+                } else {
                     System.out.println("Please fill all fields!");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Please fill in all fields");
@@ -55,8 +55,9 @@ public class SignUpController implements Initializable {
         btn_switchToLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "login-view.fxml", "Log In!", null, null);
+                DBUtils.changeScene(event, "login-view.fxml", "Log In!", null);
             }
         });
     }
 }
+
