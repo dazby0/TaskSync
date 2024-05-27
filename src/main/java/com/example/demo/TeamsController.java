@@ -1,10 +1,5 @@
-package com.example.demo.Controllers;
+package com.example.demo;
 
-import com.example.demo.Utils.DBUtils;
-import com.example.demo.Interfaces.UserAware;
-import com.example.demo.Models.LoggedUser;
-import com.example.demo.Models.Task;
-import com.example.demo.Models.Team;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -1,4 +1,4 @@
-package com.example.demo.Models;
+package com.example.demo;
 
 public class Task {
     private String taskName;
@@ -6,13 +6,15 @@ public class Task {
     private String assignedTo;
     private String startDate;
     private String timeSpent;
+    private String assignedBy;
 
-    public Task(String taskName, String status, String assignedTo, String startDate, String timeSpent) {
+    public Task(String taskName, String status, String assignedTo, String startDate, String timeSpent, String assignedBy) {
         this.taskName = taskName;
         this.status = status;
         this.assignedTo = assignedTo;
         this.startDate = startDate;
         this.timeSpent = timeSpent;
+        this.assignedBy = assignedBy;
     }
 
     // Getters and setters
@@ -55,4 +57,8 @@ public class Task {
     public void setTimeSpent(String timeSpent) {
         this.timeSpent = timeSpent;
     }
+
+    public String getAssignedBy() { return assignedBy; }
+
+    public void setAssignedBy(String assignedBy) { this.assignedBy = assignedBy; }
 }

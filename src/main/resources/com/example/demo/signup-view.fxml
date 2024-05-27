@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="600.0" style="-fx-pref-width: 900; -fx-pref-height: 700;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.SignUpController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="600.0" style="-fx-pref-width: 900; -fx-pref-height: 700;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.SignUpController">
     <ListView prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: #252E40;" />
     <ListView layoutX="400.0" prefHeight="700.0" prefWidth="500.0" style="-fx-background-color: #F2F2F2;" />
     <Label layoutX="104.0" layoutY="270.0" text="TaskSync" textFill="#f2f2f2">

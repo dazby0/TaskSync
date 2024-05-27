@@ -1,9 +1,5 @@
-package com.example.demo.Utils;
+package com.example.demo;
 
-import com.example.demo.Interfaces.UserAware;
-import com.example.demo.Models.LoggedUser;
-import com.example.demo.Models.Task;
-import com.example.demo.Models.Team;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,18 +20,20 @@ public class DBUtils {
     private static final String DB_PASSWORD = "";
 
     public static void changeScene(ActionEvent event, String fxmlFile, String title, LoggedUser loggedUser) {
-        Parent root = null;
-
         try {
             FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
-            root = loader.load();
+            Parent root = loader.load();
 
             if (loggedUser != null) {
                 Object controller = loader.getController();
-
                 if (controller instanceof UserAware) {
                     ((UserAware) controller).setLoggedUser(loggedUser);
+                    System.out.println("LoggedUser passed to controller: " + loggedUser.getUsername()); // Debug statement
+                } else {
+                    System.out.println("Controller is not an instance of UserAware."); // Debug statement
                 }
+            } else {
+                System.out.println("LoggedUser is null in changeScene."); // Debug statement
             }
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -166,7 +164,7 @@ public class DBUtils {
         return data;
     }
 
-    public static void addTask(ActionEvent event, String assignedTo, String taskTitle) {
+    public static void addTask(ActionEvent event, String assignedTo, String taskTitle, LoggedUser loggedUser) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
@@ -175,14 +173,15 @@ public class DBUtils {
         try {
             if (!taskTitle.isEmpty() && assignedTo != null && !assignedTo.isEmpty()) {
                 connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                preparedStatement = connection.prepareStatement("INSERT INTO tasks (status, assigned_to, start_date, task_title) VALUES (?, ?, ?, ?)");
-                preparedStatement.setString(1, "In progress...");
+                preparedStatement = connection.prepareStatement("INSERT INTO tasks (status, assigned_to, start_date, task_title, assigned_by) VALUES (?, ?, ?, ?, ?)");
+                preparedStatement.setString(1, "New");
                 preparedStatement.setString(2, assignedTo);
                 preparedStatement.setObject(3, currentDateTime);
                 preparedStatement.setString(4, taskTitle);
+                preparedStatement.setString(5, loggedUser.getUsername());
                 preparedStatement.executeUpdate();
 
-                changeScene(event, "main-manager-view.fxml", "Welcome Manager!", null);
+                changeScene(event, "main-manager-view.fxml", "Welcome Manager!", loggedUser);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Added new Task!");
                 alert.show();
@@ -202,6 +201,7 @@ public class DBUtils {
             }
         }
     }
+
 
     public static void createTeam(ActionEvent event, LoggedUser loggedUser, String teamName, String workers) {
         Connection connection = null;
@@ -255,7 +255,42 @@ public class DBUtils {
                 String assignedTo = resultSet.getString("assigned_to");
                 String startDate = resultSet.getString("start_date");
 
-                tasks.add(new Task(taskTitle, status, assignedTo, startDate, null));
+                tasks.add(new Task(taskTitle, status, assignedTo, startDate, null, null));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return tasks;
+    }
+
+    public static ObservableList<Task> loadYourTasks(LoggedUser loggedUser) {
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, start_date, assigned_by FROM tasks WHERE assigned_to = ?");
+            preparedStatement.setString(1, loggedUser.getUsername());
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String taskTitle = resultSet.getString("task_title");
+                String status = resultSet.getString("status");
+                String assignedTo = resultSet.getString("assigned_to");
+                String startDate = resultSet.getString("start_date");
+                String assignedBy = resultSet.getString("assigned_by");
+
+                tasks.add(new Task(taskTitle, status, assignedTo, startDate, null, assignedBy));
             }
         } catch (SQLException e) {
             e.printStackTrace();

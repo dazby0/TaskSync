@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TaskInfoController" prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <VBox alignment="TOP_LEFT" spacing="20.0" prefWidth="600.0" prefHeight="400.0">
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+            </padding>
+            <Label text="Task Information" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+            <HBox spacing="10.0">
+                <Label text="Task Name:" style="-fx-font-size: 16px;" />
+                <Label fx:id="label_taskName" style="-fx-font-size: 16px;" />
+            </HBox>
+
+            <HBox spacing="10.0">
+                <Label text="Status:" style="-fx-font-size: 16px;" />
+                <Label fx:id="label_status" style="-fx-font-size: 16px;" />
+            </HBox>
+
+            <HBox spacing="10.0">
+                <Label text="Start Date:" style="-fx-font-size: 16px;" />
+                <Label fx:id="label_startDate" style="-fx-font-size: 16px;" />
+            </HBox>
+
+            <HBox spacing="10.0">
+                <Label text="Assigned By:" style="-fx-font-size: 16px;" />
+                <Label fx:id="label_assignedBy" style="-fx-font-size: 16px;" />
+            </HBox>
+
+            <Button fx:id="btn_back" text="Back" style="-fx-font-size: 16px;" />
+        </VBox>
+    </children>
+</Pane>

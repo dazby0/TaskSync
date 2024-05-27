@@ -1,9 +1,5 @@
-package com.example.demo.Controllers;
+package com.example.demo;
 
-import com.example.demo.Utils.DBUtils;
-import com.example.demo.Interfaces.UserAware;
-import com.example.demo.Models.LoggedUser;
-import com.example.demo.Models.Task;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -62,9 +58,11 @@ public class MainController implements Initializable, UserAware {
         btn_addTask.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "add-task-view.fxml", "Add new Task!", loggedUser);
+                DBUtils.changeScene(event, "add-task-view.fxml", "Add New Task!", loggedUser);
+                System.out.println(loggedUser.getUsername());
             }
         });
+
 
         btn_switchToTeams.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -90,6 +88,7 @@ public class MainController implements Initializable, UserAware {
 
     @Override
     public void setLoggedUser(LoggedUser loggedUser) {
+        this.loggedUser = loggedUser;
         setUserInformation(loggedUser);
     }
 

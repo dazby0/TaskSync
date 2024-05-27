@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controllers.MainController">
-
+<Pane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MainWorkerController">
     <children>
-    <ListView editable="true" prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: #252E40;" />
-        <ListView layoutX="400.0" prefHeight="700.0" prefWidth="500.0" />
-    <Label fx:id="label_welcome" layoutX="14.0" layoutY="14.0" text="Hello!" textFill="#f2f2f2">
-    <font>
-        <Font size="36.0" />
-    </font>
-    </Label>
-        <Button layoutX="150.0" layoutY="325.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Teams" textFill="#252e40">
+        <ListView editable="true" prefHeight="700.0" prefWidth="365.0" style="-fx-background-color: #252E40;" />
+        <ListView layoutX="211.0" prefHeight="700.0" prefWidth="689.0" />
+        <Label fx:id="label_welcome" layoutX="14.0" layoutY="14.0" text="Hello" textFill="#f2f2f2">
             <font>
-                <Font size="24.0" />
-            </font>
-
-        </Button>
-        <Button layoutX="150.0" layoutY="209.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="TASKS" textFill="#252e40">
-            <font>
-                <Font size="24.0" />
-            </font>
-
-        </Button>
-        <Button layoutX="143.0" layoutY="443.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Raports" textFill="#252e40">
-            <font>
-                <Font size="24.0" />
-            </font>
-
-        </Button>
-        <Label layoutX="582.0" layoutY="23.0" text="YOUR TASKS" textFill="#252e40">
-            <font>
-                <Font size="24.0" />
+                <Font size="36.0" />
             </font>
         </Label>
-      <Button fx:id="btn_logout" layoutX="161.0" layoutY="610.0" mnemonicParsing="false" text="LOG OUT" />
-</children>
+        <Button fx:id="btn_yourTeams" layoutX="53.0" layoutY="261.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Teams" textFill="#252e40">
+            <font>
+                <Font size="24.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </Button>
+        <Button layoutX="46.0" layoutY="359.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Reports" textFill="#252e40">
+            <font>
+                <Font size="24.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </Button>
+        <Label layoutX="419.0" layoutY="32.0" text="YOUR TASKS" textFill="#252e40">
+            <font>
+                <Font size="48.0" />
+            </font>
+        </Label>
+        <Button fx:id="btn_logout" layoutX="14.0" layoutY="647.0" mnemonicParsing="false" text="LOG OUT">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <TableView fx:id="tab_tasks" layoutX="211.0" layoutY="118.0" prefHeight="583.0" prefWidth="689.0">
+            <columns>
+                <TableColumn fx:id="col_taskName" prefWidth="98.0" text="Task Name" />
+                <TableColumn fx:id="col_status" prefWidth="98.0" text="Status" />
+                <TableColumn fx:id="col_startDate" prefWidth="128.0" text="Start Date" />
+                <TableColumn prefWidth="103.0" text="Time Spent" />
+                <TableColumn fx:id="col_assignedBy" prefWidth="117.0" text="Assigned By" />
+                <TableColumn fx:id="col_actions" prefWidth="144.0" text="Actions" />
+            </columns>
+        </TableView>
+    </children>
 </Pane>

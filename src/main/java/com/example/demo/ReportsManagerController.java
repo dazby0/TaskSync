@@ -1,7 +1,5 @@
-package com.example.demo.Controllers;
+package com.example.demo;
 
-import com.example.demo.Utils.DBUtils;
-import com.example.demo.Models.LoggedUser;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
