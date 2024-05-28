@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,9 +33,11 @@ public class MainWorkerController implements Initializable, UserAware {
     @FXML
     private TableColumn<Task, String> col_startDate;
     @FXML
+    private TableColumn<Task, String> col_spentTime;
+    @FXML
     private TableColumn<Task, String> col_assignedBy;
     @FXML
-    private TableColumn<Task, Void> col_actions;
+    private TableColumn<Task, Void> col_info;
 
     private LoggedUser loggedUser;
 
@@ -41,12 +45,23 @@ public class MainWorkerController implements Initializable, UserAware {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         col_taskName.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
-        col_startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        col_startDate.setCellValueFactory(new PropertyValueFactory<>("assignedDate"));
         col_assignedBy.setCellValueFactory(new PropertyValueFactory<>("assignedBy"));
 
-        btn_yourTeams.setOnAction(event -> DBUtils.changeScene(event, "teams-worker-view.fxml", "Check your teams!", loggedUser));
+        // Custom cell factory for col_spentTime
+        col_spentTime.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Task, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Task, String> param) {
+                Task task = param.getValue();
+                if ("Finished".equals(task.getStatus())) {
+                    return new SimpleStringProperty(task.getTimeSpent());
+                } else {
+                    return new SimpleStringProperty("Not Finished");
+                }
+            }
+        });
 
-        col_actions.setCellFactory(new Callback<>() {
+        col_info.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Task, Void> call(final TableColumn<Task, Void> param) {
                 return new TableCell<>() {
@@ -74,7 +89,34 @@ public class MainWorkerController implements Initializable, UserAware {
             }
         });
 
+        // Custom row factory to set background color based on task status with opacity 0.1
+        tab_tasks.setRowFactory(tv -> new TableRow<Task>() {
+            @Override
+            protected void updateItem(Task item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    setStyle("");
+                } else {
+                    switch (item.getStatus()) {
+                        case "New":
+                            setStyle("-fx-background-color: rgba(191, 146, 107, 0.3);");
+                            break;
+                        case "In Progress":
+                            setStyle("-fx-background-color: rgba(140, 71, 46, 0.3);");
+                            break;
+                        case "Finished":
+                            setStyle("-fx-background-color: rgba(64, 56, 20, 0.3);");
+                            break;
+                        default:
+                            setStyle("");
+                            break;
+                    }
+                }
+            }
+        });
+
         btn_logout.setOnAction(event -> DBUtils.changeScene(event, "login-view.fxml", "Log In to TaskSync!", null));
+        btn_yourTeams.setOnAction(event -> DBUtils.changeScene(event, "teams-worker-view.fxml", "Check your teams!", loggedUser));
     }
 
     @Override

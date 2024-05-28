@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DBUtils {
 
@@ -173,7 +174,7 @@ public class DBUtils {
         try {
             if (!taskTitle.isEmpty() && assignedTo != null && !assignedTo.isEmpty()) {
                 connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                preparedStatement = connection.prepareStatement("INSERT INTO tasks (status, assigned_to, start_date, task_title, assigned_by) VALUES (?, ?, ?, ?, ?)");
+                preparedStatement = connection.prepareStatement("INSERT INTO tasks (status, assigned_to, assigned_date, task_title, assigned_by) VALUES (?, ?, ?, ?, ?)");
                 preparedStatement.setString(1, "New");
                 preparedStatement.setString(2, assignedTo);
                 preparedStatement.setObject(3, currentDateTime);
@@ -246,16 +247,17 @@ public class DBUtils {
 
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, start_date FROM tasks");
+            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, time_spent FROM tasks");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 String taskTitle = resultSet.getString("task_title");
                 String status = resultSet.getString("status");
                 String assignedTo = resultSet.getString("assigned_to");
-                String startDate = resultSet.getString("start_date");
+                String assignedDate = resultSet.getString("assigned_date");
+                String spentTime = resultSet.getString("time_spent");
 
-                tasks.add(new Task(taskTitle, status, assignedTo, startDate, null, null));
+                tasks.add(new Task(taskTitle, status, assignedTo, assignedDate, spentTime, null, null));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -279,7 +281,7 @@ public class DBUtils {
 
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, start_date, assigned_by FROM tasks WHERE assigned_to = ?");
+            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, assigned_by, time_spent FROM tasks WHERE assigned_to = ? ORDER BY assigned_date DESC");
             preparedStatement.setString(1, loggedUser.getUsername());
             resultSet = preparedStatement.executeQuery();
 
@@ -287,10 +289,11 @@ public class DBUtils {
                 String taskTitle = resultSet.getString("task_title");
                 String status = resultSet.getString("status");
                 String assignedTo = resultSet.getString("assigned_to");
-                String startDate = resultSet.getString("start_date");
+                String assignedDate = resultSet.getString("assigned_date");
                 String assignedBy = resultSet.getString("assigned_by");
+                String spentTime = resultSet.getString("time_spent");
 
-                tasks.add(new Task(taskTitle, status, assignedTo, startDate, null, assignedBy));
+                tasks.add(new Task(taskTitle, status, assignedTo, assignedDate, spentTime, assignedBy, null));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -336,5 +339,66 @@ public class DBUtils {
             }
         }
         return teams;
+    }
+
+    public static void updateStatus(Task task, String status, LocalDateTime startTime) {
+        String query = "UPDATE tasks SET status = ?, start_date = ? WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, status);
+            statement.setString(2, startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            statement.setString(3, task.getTaskName());
+            statement.setString(4, task.getAssignedBy());
+            statement.setString(5, task.getAssignedDate());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateStatus(Task task, String status, String timeSpent, String finishDate) {
+        String query = "UPDATE tasks SET status = ?, time_spent = ?, finish_date = ? WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, status);
+            statement.setString(2, timeSpent);
+            statement.setString(3, finishDate);
+            statement.setString(4, task.getTaskName());
+            statement.setString(5, task.getAssignedBy());
+            statement.setString(6, task.getAssignedDate());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static LocalDateTime getTaskStartTime(Task task) {
+        String query = "SELECT start_date FROM tasks WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?";
+        LocalDateTime startTime = null;
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, task.getTaskName());
+            statement.setString(2, task.getAssignedBy());
+            statement.setString(3, task.getAssignedDate());
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                String startTimeStr = rs.getString("start_date");
+                startTime = LocalDateTime.parse(startTimeStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return startTime;
     }
 }

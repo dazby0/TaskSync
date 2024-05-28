@@ -1,39 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TaskInfoController" prefHeight="400.0" prefWidth="600.0">
+<Pane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TaskInfoController">
     <children>
-        <VBox alignment="TOP_LEFT" spacing="20.0" prefWidth="600.0" prefHeight="400.0">
-            <padding>
-                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
-            </padding>
-            <Label text="Task Information" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+      <Pane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #252E40;">
+         <children>
+            <Label layoutX="335.0" layoutY="14.0" text="TASK INFO" textFill="#f2f2f2">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_taskName" layoutX="14.0" layoutY="118.0" prefHeight="45.0" prefWidth="875.0" text="Title:" textFill="#f2f2f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_status" layoutX="13.0" layoutY="181.0" prefHeight="45.0" prefWidth="875.0" text="Status:" textFill="#f2f2f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_assignedBy" layoutX="13.0" layoutY="248.0" prefHeight="45.0" prefWidth="875.0" text="Assigned By:" textFill="#f2f2f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_assignedDate" layoutX="14.0" layoutY="321.0" text="Assigned Date:" textFill="#f2f2f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Button fx:id="btn_finishTask" layoutX="761.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="FINISH TASK">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btn_startTask" layoutX="622.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="START TASK">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="label_timeSpent" layoutX="13.0" layoutY="389.0" text="Time Spent:" textFill="#f2f2f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_finishDate" layoutX="14.0" layoutY="465.0" text="Finish Date:" textFill="#f2f2f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
 
-            <HBox spacing="10.0">
-                <Label text="Task Name:" style="-fx-font-size: 16px;" />
-                <Label fx:id="label_taskName" style="-fx-font-size: 16px;" />
-            </HBox>
-
-            <HBox spacing="10.0">
-                <Label text="Status:" style="-fx-font-size: 16px;" />
-                <Label fx:id="label_status" style="-fx-font-size: 16px;" />
-            </HBox>
-
-            <HBox spacing="10.0">
-                <Label text="Start Date:" style="-fx-font-size: 16px;" />
-                <Label fx:id="label_startDate" style="-fx-font-size: 16px;" />
-            </HBox>
-
-            <HBox spacing="10.0">
-                <Label text="Assigned By:" style="-fx-font-size: 16px;" />
-                <Label fx:id="label_assignedBy" style="-fx-font-size: 16px;" />
-            </HBox>
-
-            <Button fx:id="btn_back" text="Back" style="-fx-font-size: 16px;" />
-        </VBox>
+         <Button fx:id="btn_back" layoutX="762.0" layoutY="625.0" prefHeight="53.0" prefWidth="124.0" style="-fx-background-color: #252E40;" text="Back" textFill="#f2f2f2">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
     </children>
 </Pane>

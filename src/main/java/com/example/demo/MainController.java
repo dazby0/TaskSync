@@ -46,7 +46,7 @@ public class MainController implements Initializable, UserAware {
         col_taskName.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
         col_assignedTo.setCellValueFactory(new PropertyValueFactory<>("assignedTo"));
-        col_startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        col_startDate.setCellValueFactory(new PropertyValueFactory<>("assignedDate"));
 
         btn_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override

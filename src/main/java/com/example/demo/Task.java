@@ -4,17 +4,19 @@ public class Task {
     private String taskName;
     private String status;
     private String assignedTo;
-    private String startDate;
+    private String assignedDate;
     private String timeSpent;
     private String assignedBy;
+    private String finishTime;
 
-    public Task(String taskName, String status, String assignedTo, String startDate, String timeSpent, String assignedBy) {
+    public Task(String taskName, String status, String assignedTo, String assignedDate, String timeSpent, String assignedBy, String finishTime) {
         this.taskName = taskName;
         this.status = status;
         this.assignedTo = assignedTo;
-        this.startDate = startDate;
+        this.assignedDate = assignedDate;
         this.timeSpent = timeSpent;
         this.assignedBy = assignedBy;
+        this.finishTime = finishTime;
     }
 
     // Getters and setters
@@ -42,12 +44,12 @@ public class Task {
         this.assignedTo = assignedTo;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getAssignedDate() {
+        return assignedDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setAssignedDate(String assignedDate) {
+        this.assignedDate = assignedDate;
     }
 
     public String getTimeSpent() {
@@ -61,4 +63,8 @@ public class Task {
     public String getAssignedBy() { return assignedBy; }
 
     public void setAssignedBy(String assignedBy) { this.assignedBy = assignedBy; }
+
+    public String getFinishTime() { return finishTime; }
+
+    public void setFinishTime(String finishTime) { this.finishTime = finishTime; }
 }

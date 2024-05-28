@@ -11,7 +11,7 @@
         <ListView layoutX="211.0" prefHeight="700.0" prefWidth="689.0" />
         <Label fx:id="label_welcome" layoutX="14.0" layoutY="14.0" text="Hello" textFill="#f2f2f2">
             <font>
-                <Font size="36.0" />
+                <Font size="18.0" />
             </font>
         </Label>
         <Button fx:id="btn_yourTeams" layoutX="53.0" layoutY="261.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Teams" textFill="#252e40">
@@ -42,12 +42,12 @@
         </Button>
         <TableView fx:id="tab_tasks" layoutX="211.0" layoutY="118.0" prefHeight="583.0" prefWidth="689.0">
             <columns>
-                <TableColumn fx:id="col_taskName" prefWidth="98.0" text="Task Name" />
-                <TableColumn fx:id="col_status" prefWidth="98.0" text="Status" />
-                <TableColumn fx:id="col_startDate" prefWidth="128.0" text="Start Date" />
-                <TableColumn prefWidth="103.0" text="Time Spent" />
-                <TableColumn fx:id="col_assignedBy" prefWidth="117.0" text="Assigned By" />
-                <TableColumn fx:id="col_actions" prefWidth="144.0" text="Actions" />
+                <TableColumn fx:id="col_taskName" prefWidth="88.0" text="Task Name" />
+                <TableColumn fx:id="col_status" prefWidth="90.0" text="Status" />
+                <TableColumn fx:id="col_startDate" prefWidth="153.0" text="Start Date" />
+                <TableColumn fx:id="col_spentTime" prefWidth="141.0" text="Time Spent" />
+                <TableColumn fx:id="col_assignedBy" prefWidth="137.0" text="Assigned By" />
+                <TableColumn fx:id="col_info" prefWidth="79.0" text="Info" />
             </columns>
         </TableView>
     </children>
