@@ -3,8 +3,6 @@ package com.example.demo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,8 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class MainWorkerController implements Initializable, UserAware {
@@ -22,6 +18,8 @@ public class MainWorkerController implements Initializable, UserAware {
     private Button btn_logout;
     @FXML
     private Button btn_yourTeams;
+    @FXML
+    private Button btn_workerReports;
     @FXML
     private Label label_welcome;
     @FXML
@@ -72,7 +70,7 @@ public class MainWorkerController implements Initializable, UserAware {
                         btnMore.setOnAction(event -> {
                             Task task = getTableView().getItems().get(getIndex());
                             SharedService.getInstance().setCurrentTask(task);
-                            DBUtils.changeScene(event, "task-info-view.fxml", "Task Information", loggedUser);
+                            DBUtils.changeScene(event, "task-info-worker-view.fxml", "Task Information", loggedUser);
                         });
                     }
 
@@ -117,6 +115,7 @@ public class MainWorkerController implements Initializable, UserAware {
 
         btn_logout.setOnAction(event -> DBUtils.changeScene(event, "login-view.fxml", "Log In to TaskSync!", null));
         btn_yourTeams.setOnAction(event -> DBUtils.changeScene(event, "teams-worker-view.fxml", "Check your teams!", loggedUser));
+        btn_workerReports.setOnAction(event -> DBUtils.changeScene(event, "reports-worker-view.fxml", "Look at Your Reports!", loggedUser));
     }
 
     @Override

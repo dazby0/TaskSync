@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MainController">
    <children>
-      <ListView prefHeight="700.0" prefWidth="240.0" style="-fx-background-color: #252E40;" />
+      <ListView prefHeight="700.0" prefWidth="189.0" style="-fx-background-color: #252E40;" />
       <ListView layoutX="239.0" prefHeight="700.0" prefWidth="661.0" style="-fx-background-color: #f2f2f2;" />
       <Button fx:id="btn_logout" layoutX="16.0" layoutY="628.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Log Out">
          <cursor>
@@ -20,7 +20,7 @@
          <font>
             <Font size="24.0" />
          </font></Label>
-      <Button fx:id="btn_switchToTeams" layoutX="70.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Teams" textFill="#252e40">
+      <Button fx:id="btn_switchToTeams" layoutX="44.0" layoutY="272.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Teams" textFill="#252e40">
          <font>
             <Font size="24.0" />
          </font>
@@ -28,7 +28,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btn_switchToReports" layoutX="63.0" layoutY="356.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Reports" textFill="#252e40">
+      <Button fx:id="btn_switchToReports" layoutX="37.0" layoutY="356.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Reports" textFill="#252e40">
          <font>
             <Font size="24.0" />
          </font>
@@ -49,13 +49,14 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tab_tasks" layoutX="239.0" layoutY="114.0" prefHeight="586.0" prefWidth="661.0" style="-fx-background-color: #f2f2f2;">
+      <TableView fx:id="tab_tasks" layoutX="189.0" layoutY="114.0" prefHeight="586.0" prefWidth="711.0" style="-fx-background-color: #f2f2f2;">
         <columns>
           <TableColumn fx:id="col_taskName" prefWidth="114.0" text="Task Name" />
           <TableColumn fx:id="col_status" prefWidth="96.0" text="Status" />
             <TableColumn fx:id="col_assignedTo" prefWidth="123.0" text="Assigned To" />
-            <TableColumn fx:id="col_startDate" prefWidth="192.0" text="Start Date" />
-            <TableColumn fx:id="col_timeSpent" prefWidth="135.0" text="Time Spent" />
+            <TableColumn fx:id="col_startDate" prefWidth="163.0" text="Start Date" />
+            <TableColumn fx:id="col_spentTime" prefWidth="136.0" text="Time Spent" />
+            <TableColumn fx:id="col_taskInfo" prefWidth="78.0" text="Task Info" />
         </columns>
       </TableView>
    </children>

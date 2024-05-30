@@ -247,7 +247,7 @@ public class DBUtils {
 
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, time_spent FROM tasks");
+            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, time_spent, finish_date FROM tasks ORDER BY assigned_date DESC");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -256,8 +256,9 @@ public class DBUtils {
                 String assignedTo = resultSet.getString("assigned_to");
                 String assignedDate = resultSet.getString("assigned_date");
                 String spentTime = resultSet.getString("time_spent");
+                String finishDate = resultSet.getString("finish_date");
 
-                tasks.add(new Task(taskTitle, status, assignedTo, assignedDate, spentTime, null, null));
+                tasks.add(new Task(taskTitle, status, assignedTo, assignedDate, spentTime, null, finishDate));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -436,4 +437,82 @@ public class DBUtils {
 
         return startTime;
     }
+
+    public static long calculateAverageTimeSpent(String username) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        long averageTimeSpentSeconds = 0;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement(
+                    "SELECT AVG(TIME_TO_SEC(time_spent)) AS average_time FROM tasks WHERE assigned_to = ? AND status = 'Finished'"
+            );
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                averageTimeSpentSeconds = resultSet.getLong("average_time");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return averageTimeSpentSeconds;
+    }
+
+    public static ObservableList<ReportAverageTime> getTeamAverageTimes(String username) {
+        ObservableList<ReportAverageTime> teamAverageTimes = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement(
+                    "SELECT t.team_name, AVG(TIME_TO_SEC(ta.time_spent)) AS average_time_spent " +
+                            "FROM teams t " +
+                            "JOIN tasks ta ON t.workers LIKE CONCAT('%', ta.assigned_to, '%') " +
+                            "WHERE t.workers LIKE CONCAT('%', ?, '%') AND ta.status = 'Finished' " +
+                            "GROUP BY t.team_name"
+            );
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String teamName = resultSet.getString("team_name");
+                long averageTimeSpentSeconds = resultSet.getLong("average_time_spent");
+
+                long hours = averageTimeSpentSeconds / 3600;
+                long minutes = (averageTimeSpentSeconds % 3600) / 60;
+                long seconds = averageTimeSpentSeconds % 60;
+
+                String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+                teamAverageTimes.add(new ReportAverageTime(teamName, timeFormatted));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return teamAverageTimes;
+    }
 }
+
+

@@ -7,7 +7,7 @@
 
 <Pane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MainWorkerController">
     <children>
-        <ListView editable="true" prefHeight="700.0" prefWidth="365.0" style="-fx-background-color: #252E40;" />
+        <ListView editable="true" prefHeight="700.0" prefWidth="212.0" style="-fx-background-color: #252E40;" />
         <ListView layoutX="211.0" prefHeight="700.0" prefWidth="689.0" />
         <Label fx:id="label_welcome" layoutX="14.0" layoutY="14.0" text="Hello" textFill="#f2f2f2">
             <font>
@@ -22,7 +22,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
         </Button>
-        <Button layoutX="46.0" layoutY="359.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Reports" textFill="#252e40">
+        <Button fx:id="btn_workerReports" layoutX="46.0" layoutY="359.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="Reports" textFill="#252e40">
             <font>
                 <Font size="24.0" />
             </font>

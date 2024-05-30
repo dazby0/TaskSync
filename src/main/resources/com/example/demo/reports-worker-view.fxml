@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ReportsWorkerController">
+   <children>
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #252E40;">
+         <children>
+            <Button fx:id="btn_switchToMain" layoutX="789.0" layoutY="31.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="97.0" text="BACK">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children></Pane>
+      <Label layoutX="352.0" layoutY="14.0" text="REPORTS">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="123.0" prefHeight="35.0" prefWidth="437.0" text="Average time you spent on a task:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_avgUserTime" layoutX="449.0" layoutY="123.0" prefHeight="35.0" prefWidth="437.0" textAlignment="RIGHT">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tab_averageTimeReport" layoutX="132.0" layoutY="240.0" prefHeight="311.0" prefWidth="639.0">
+        <columns>
+          <TableColumn fx:id="col_team" prefWidth="318.0" text="Team" />
+          <TableColumn fx:id="col_averageTimeSpent" prefWidth="320.0" text="Average Time Spent" />
+        </columns>
+      </TableView>
+      <Label layoutX="231.0" layoutY="194.0" text="Check the average time for the task of your teams">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class TaskInfoController implements Initializable, UserAware {
+public class TaskInfoWorkerController implements Initializable, UserAware {
     @FXML
     private Label label_taskName;
     @FXML
@@ -61,8 +61,10 @@ public class TaskInfoController implements Initializable, UserAware {
                     btn_startTask.setVisible(false);
                     btn_finishTask.setVisible(true);
                     label_timeSpent.setVisible(true);
+                    label_finishDate.setVisible(false);
                     startTime = DBUtils.getTaskStartTime(task);
                     if (startTime != null) {
+                        updateElapsedTime();
                         startTimer();
                     }
                     break;
@@ -150,4 +152,14 @@ public class TaskInfoController implements Initializable, UserAware {
             timer.stop();
         }
     }
+
+    private void updateElapsedTime() {
+        if (startTime != null) {
+            java.time.Duration duration = java.time.Duration.between(startTime, LocalDateTime.now());
+            long seconds = duration.getSeconds();
+            String timeSpent = String.format("%02d:%02d:%02d", seconds / 3600, (seconds % 3600) / 60, seconds % 60);
+            label_timeSpent.setText("Time Spent: " + timeSpent);
+        }
+    }
+
 }
