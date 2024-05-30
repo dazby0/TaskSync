@@ -19,7 +19,6 @@ public class Task {
         this.finishTime = finishTime;
     }
 
-    // Getters and setters
     public String getTaskName() {
         return taskName;
     }

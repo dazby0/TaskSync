@@ -1,8 +1,7 @@
 package com.example.demo;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -29,11 +28,14 @@ public class TeamsWorkerController implements Initializable, UserAware {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupTableColumns();
+        btn_switchToMain.setOnAction(event -> DBUtils.changeScene(event, "main-worker-view.fxml", "Check Your Tasks!", loggedUser));
+    }
+
+    private void setupTableColumns() {
         col_teamName.setCellValueFactory(new PropertyValueFactory<>("teamName"));
         col_teamManager.setCellValueFactory(new PropertyValueFactory<>("manager"));
-        col_colleagues.setCellValueFactory(new PropertyValueFactory<>("workers"));
-
-        btn_switchToMain.setOnAction(event -> DBUtils.changeScene(event, "main-worker-view.fxml", "Check Your Tasks!", loggedUser));
+        col_colleagues.setCellValueFactory(cellData -> new SimpleStringProperty(formatWorkerNames(cellData.getValue().getWorkers())));
     }
 
     @Override
@@ -63,5 +65,19 @@ public class TeamsWorkerController implements Initializable, UserAware {
             }
             tab_workerTeams.setItems(workerTeams);
         }
+    }
+
+    private String formatWorkerNames(String workers) {
+        String[] workerArray = workers.split(",\\s*");
+        StringBuilder formattedNames = new StringBuilder();
+
+        for (String worker : workerArray) {
+            if (!formattedNames.isEmpty()) {
+                formattedNames.append(", ");
+            }
+            formattedNames.append(worker);
+        }
+
+        return formattedNames.toString();
     }
 }

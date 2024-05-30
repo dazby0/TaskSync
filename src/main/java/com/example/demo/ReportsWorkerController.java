@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -28,9 +29,16 @@ public class ReportsWorkerController implements Initializable, UserAware {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        configureTableColumns();
+        setupButtonActions();
+    }
+
+    private void configureTableColumns() {
         col_team.setCellValueFactory(new PropertyValueFactory<>("team"));
         col_averageTimeSpent.setCellValueFactory(new PropertyValueFactory<>("averageTimeSpent"));
+    }
 
+    private void setupButtonActions() {
         btn_switchToMain.setOnAction(event -> DBUtils.changeScene(event, "main-worker-view.fxml", "Track Your Tasks", loggedUser));
     }
 

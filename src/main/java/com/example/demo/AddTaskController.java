@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,7 +10,6 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static com.example.demo.DBUtils.loadWorkers;
 
 public class AddTaskController implements Initializable, UserAware {
     @FXML
@@ -30,23 +28,22 @@ public class AddTaskController implements Initializable, UserAware {
         cb_assignedTo.setItems(DBUtils.loadWorkers());
         cb_assignedTo.setPromptText("Select worker:");
 
-        btn_switchToMain.setOnAction(event -> DBUtils.changeScene(event, "main-manager-view.fxml", "Welcome Manager!", loggedUser));
+        setupButtonActions();
+    }
 
-        btn_addTask.setOnAction(event -> {
-            String title = tf_taskTitle.getText();
-            String assignedTo = cb_assignedTo.getValue();
-            if (loggedUser != null) {
-                System.out.println("Adding task for user: " + loggedUser.getUsername()); // Debug statement
-                DBUtils.addTask(event, assignedTo, title, loggedUser);
-            } else {
-                System.out.println("LoggedUser is null in AddTaskController!"); // Debug statement
-            }
-        });
+    private void setupButtonActions() {
+        btn_switchToMain.setOnAction(event -> DBUtils.changeScene(event, "main-manager-view.fxml", "Welcome Manager!", loggedUser));
+        btn_addTask.setOnAction(this::handleAddTask);
+    }
+
+    private void handleAddTask(ActionEvent event) {
+        String title = tf_taskTitle.getText();
+        String assignedTo = cb_assignedTo.getValue();
+        DBUtils.addTask(event, assignedTo, title, loggedUser);
     }
 
     @Override
     public void setLoggedUser(LoggedUser loggedUser) {
-        System.out.println("LoggedUser set in AddTaskController: " + loggedUser.getUsername()); // Debug statement
         this.loggedUser = loggedUser;
     }
 }

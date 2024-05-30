@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -37,48 +36,40 @@ public class CreateTeamController implements Initializable, UserAware {
         cb_workers.setItems(DBUtils.loadWorkers());
         cb_workers.setPromptText("Show Workers:");
 
-        btn_switchToTeamsView.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "teams-manager-view.fxml", "Your teams!", loggedUser);
+        setupButtonActions();
+    }
+
+    private void setupButtonActions() {
+        btn_switchToTeamsView.setOnAction(event -> DBUtils.changeScene(event, "teams-manager-view.fxml", "Your teams!", loggedUser));
+
+        btn_addWorkerToTeam.setOnAction(event -> {
+            String username = cb_workers.getValue();
+            String labelText = label_addedWorkers.getText();
+            if (labelText.isEmpty()) {
+                label_addedWorkers.setText(username);
+            } else {
+                label_addedWorkers.setText(labelText + ", " + username);
             }
+            cb_workers.getItems().remove(username);
         });
 
-        btn_addWorkerToTeam.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String username = cb_workers.getValue();
-                String labelText = label_addedWorkers.getText();
-                if (labelText.isEmpty()) {
-                    label_addedWorkers.setText(username);
-                } else {
-                    label_addedWorkers.setText(labelText + ", " + username);
-                }
-                cb_workers.getItems().remove(username);
-            }
+        btn_clearWorkers.setOnAction(event -> {
+            cb_workers.setItems(DBUtils.loadWorkers());
+            label_addedWorkers.setText("");
         });
 
-        btn_clearWorkers.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                cb_workers.setItems(DBUtils.loadWorkers());
-                label_addedWorkers.setText("");
-            }
-        });
+        btn_createTeam.setOnAction(this::createTeam);
+    }
 
-        btn_createTeam.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (loggedUser != null) {
-                    String teamName = tf_teamName.getText();
-                    String workers = label_addedWorkers.getText();
-                    DBUtils.createTeam(event, loggedUser, teamName, workers);
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("User is not logged in!");
-                    alert.show();
-                }
-            }
-        });
+    private void createTeam(ActionEvent event) {
+        if (loggedUser != null) {
+            String teamName = tf_teamName.getText();
+            String workers = label_addedWorkers.getText();
+            DBUtils.createTeam(event, loggedUser, teamName, workers);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("User is not logged in!");
+            alert.show();
+        }
     }
 }

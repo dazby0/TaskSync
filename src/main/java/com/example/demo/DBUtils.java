@@ -20,6 +20,20 @@ public class DBUtils {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
+    private static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+    }
+
+    private static void closeResources(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
+        try {
+            if (resultSet != null) resultSet.close();
+            if (preparedStatement != null) preparedStatement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void changeScene(ActionEvent event, String fxmlFile, String title, LoggedUser loggedUser) {
         try {
             FXMLLoader loader = new FXMLLoader(DBUtils.class.getResource(fxmlFile));
@@ -29,12 +43,7 @@ public class DBUtils {
                 Object controller = loader.getController();
                 if (controller instanceof UserAware) {
                     ((UserAware) controller).setLoggedUser(loggedUser);
-                    System.out.println("LoggedUser passed to controller: " + loggedUser.getUsername()); // Debug statement
-                } else {
-                    System.out.println("Controller is not an instance of UserAware."); // Debug statement
                 }
-            } else {
-                System.out.println("LoggedUser is null in changeScene."); // Debug statement
             }
 
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -55,7 +64,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             psCheckUserExists = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
             psCheckUserExists.setString(1, username);
             resultSet = psCheckUserExists.executeQuery();
@@ -83,14 +92,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (psCheckUserExists != null) psCheckUserExists.close();
-                if (psInsert != null) psInsert.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, psInsert, resultSet);
         }
     }
 
@@ -101,7 +103,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement("SELECT password, role FROM users WHERE username = ?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -134,13 +136,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
     }
 
@@ -150,8 +146,9 @@ public class DBUtils {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         ObservableList data = FXCollections.observableArrayList();
+
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement("SELECT username FROM users WHERE role = 'Worker'");
             resultSet = preparedStatement.executeQuery();
 
@@ -161,6 +158,8 @@ public class DBUtils {
         }
         catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources(connection, preparedStatement, resultSet);
         }
         return data;
     }
@@ -173,7 +172,7 @@ public class DBUtils {
 
         try {
             if (!taskTitle.isEmpty() && assignedTo != null && !assignedTo.isEmpty()) {
-                connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                connection = getConnection();
                 preparedStatement = connection.prepareStatement("INSERT INTO tasks (status, assigned_to, assigned_date, task_title, assigned_by) VALUES (?, ?, ?, ?, ?)");
                 preparedStatement.setString(1, "New");
                 preparedStatement.setString(2, assignedTo);
@@ -194,12 +193,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, null);
         }
     }
 
@@ -210,7 +204,7 @@ public class DBUtils {
 
         try {
             if (!workers.isEmpty() && !teamName.isEmpty()) {
-                connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+                connection = getConnection();
                 preparedStatement = connection.prepareStatement("INSERT INTO teams (manager, workers, team_name) VALUES (?, ?, ?)");
                 preparedStatement.setString(1, loggedUser.getUsername());
                 preparedStatement.setString(2, workers);
@@ -229,12 +223,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, null);
         }
     }
 
@@ -246,7 +235,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, time_spent, finish_date FROM tasks ORDER BY assigned_date DESC");
             resultSet = preparedStatement.executeQuery();
 
@@ -263,13 +252,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
         return tasks;
     }
@@ -281,7 +264,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, assigned_by, time_spent, finish_date FROM tasks WHERE assigned_to = ? ORDER BY assigned_date DESC");
             preparedStatement.setString(1, loggedUser.getUsername());
             resultSet = preparedStatement.executeQuery();
@@ -300,13 +283,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
         return tasks;
     }
@@ -318,7 +295,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement("SELECT team_name, workers FROM teams");
             resultSet = preparedStatement.executeQuery();
 
@@ -332,13 +309,7 @@ public class DBUtils {
         catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
         return teams;
     }
@@ -350,7 +321,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement("SELECT team_name, workers, manager FROM teams WHERE workers LIKE ?");
             preparedStatement.setString(1, "%" + workerUsername + "%");
             resultSet = preparedStatement.executeQuery();
@@ -366,73 +337,81 @@ public class DBUtils {
         catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
         return workerTeams;
     }
 
     public static void updateStatus(Task task, String status, LocalDateTime startTime) {
-        String query = "UPDATE tasks SET status = ?, start_date = ? WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement("UPDATE tasks SET status = ?, start_date = ? WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?");
 
-            statement.setString(1, status);
-            statement.setString(2, startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            statement.setString(3, task.getTaskName());
-            statement.setString(4, task.getAssignedBy());
-            statement.setString(5, task.getAssignedDate());
-            statement.executeUpdate();
+            preparedStatement.setString(1, status);
+            preparedStatement.setString(2, startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            preparedStatement.setString(3, task.getTaskName());
+            preparedStatement.setString(4, task.getAssignedBy());
+            preparedStatement.setString(5, task.getAssignedDate());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources(connection, preparedStatement, null);
         }
     }
 
     public static void updateStatus(Task task, String status, String timeSpent, String finishDate) {
-        String query = "UPDATE tasks SET status = ?, time_spent = ?, finish_date = ? WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement("UPDATE tasks SET status = ?, time_spent = ?, finish_date = ? WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?");
 
-            statement.setString(1, status);
-            statement.setString(2, timeSpent);
-            statement.setString(3, finishDate);
-            statement.setString(4, task.getTaskName());
-            statement.setString(5, task.getAssignedBy());
-            statement.setString(6, task.getAssignedDate());
-            statement.executeUpdate();
+            preparedStatement.setString(1, status);
+            preparedStatement.setString(2, timeSpent);
+            preparedStatement.setString(3, finishDate);
+            preparedStatement.setString(4, task.getTaskName());
+            preparedStatement.setString(5, task.getAssignedBy());
+            preparedStatement.setString(6, task.getAssignedDate());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources(connection, preparedStatement, null);
         }
     }
 
     public static LocalDateTime getTaskStartTime(Task task) {
-        String query = "SELECT start_date FROM tasks WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
         LocalDateTime startTime = null;
 
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try {
+            connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT start_date FROM tasks WHERE task_title = ? AND assigned_by = ? AND assigned_date = ?");
 
             statement.setString(1, task.getTaskName());
             statement.setString(2, task.getAssignedBy());
             statement.setString(3, task.getAssignedDate());
-            ResultSet rs = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
-            if (rs.next()) {
-                String startTimeStr = rs.getString("start_date");
+            if (resultSet.next()) {
+                String startTimeStr = resultSet.getString("start_date");
                 startTime = LocalDateTime.parse(startTimeStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeResources(connection, preparedStatement, resultSet);
         }
 
         return startTime;
@@ -458,13 +437,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
         return averageTimeSpentSeconds;
     }
@@ -476,7 +449,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(
                     "SELECT t.team_name, AVG(TIME_TO_SEC(ta.time_spent)) AS average_time_spent " +
                             "FROM teams t " +
@@ -502,13 +475,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
 
         return teamAverageTimes;
@@ -521,9 +488,8 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
 
-            // Modified SQL query to consider teams where the manager is logged user
             preparedStatement = connection.prepareStatement(
                     "SELECT t.team_name, AVG(TIME_TO_SEC(ta.time_spent)) AS average_time_spent " +
                             "FROM teams t " +
@@ -550,13 +516,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
 
         return teamAverageTimes;
@@ -570,7 +530,7 @@ public class DBUtils {
         ResultSet resultSet = null;
 
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection = getConnection();
 
             preparedStatement = connection.prepareStatement(
                     "SELECT u.username, AVG(TIME_TO_SEC(ta.time_spent)) AS average_time_spent " +
@@ -580,7 +540,6 @@ public class DBUtils {
                             "WHERE t.manager = ? AND ta.status = 'Finished' AND ta.assigned_by = t.manager " +
                             "GROUP BY u.username"
             );
-
 
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
@@ -600,13 +559,7 @@ public class DBUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources(connection, preparedStatement, resultSet);
         }
 
         return workersAverageTimes;

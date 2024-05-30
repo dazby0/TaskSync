@@ -13,7 +13,17 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #F2F2F2;" />
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #F2F2F2;">
+         <children>
+            <Button fx:id="btn_switchToTeamsView" layoutX="796.0" layoutY="31.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: #252E40;" text="BACK" textFill="#f2f2f2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children></Pane>
       <Label layoutX="47.0" layoutY="163.0" text="Team name:*" textFill="#f2f2f2">
          <font>
             <Font size="36.0" />
@@ -34,7 +44,7 @@
          <font>
             <Font size="24.0" />
          </font></Label>
-      <Button fx:id="btn_createTeam" layoutX="630.0" layoutY="506.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="CREATE TEAM">
+      <Button fx:id="btn_createTeam" layoutX="595.0" layoutY="507.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="CREATE TEAM">
          <font>
             <Font size="24.0" />
          </font>
@@ -45,15 +55,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btn_switchToTeamsView" layoutX="490.0" layoutY="506.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="BACK">
-         <font>
-            <Font size="24.0" />
-         </font>
+      <Button fx:id="btn_addWorkerToTeam" layoutX="783.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="103.0" text="Add Worker">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btn_addWorkerToTeam" layoutX="783.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="103.0" text="Add Worker" />
-      <Button fx:id="btn_clearWorkers" layoutX="47.0" layoutY="517.0" mnemonicParsing="false" text="Clear List" />
+         </cursor></Button>
+      <Button fx:id="btn_clearWorkers" layoutX="47.0" layoutY="517.0" mnemonicParsing="false" text="Clear List">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </Pane>

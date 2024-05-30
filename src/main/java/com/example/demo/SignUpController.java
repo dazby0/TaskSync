@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -29,34 +27,32 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        configureRadioButtons();
+        setupButtonActions();
+    }
+
+    private void configureRadioButtons() {
         ToggleGroup toggleGroup = new ToggleGroup();
         radio_manager.setToggleGroup(toggleGroup);
         radio_worker.setToggleGroup(toggleGroup);
 
         radio_worker.setSelected(true);
+    }
 
-        btn_signup.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String toggleName = ((RadioButton) toggleGroup.getSelectedToggle()).getText();
+    private void setupButtonActions() {
+        btn_signup.setOnAction(event -> {
+            String toggleName = ((RadioButton) radio_manager.getToggleGroup().getSelectedToggle()).getText();
 
-                if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
-                    DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), toggleName);
-                } else {
-                    System.out.println("Please fill all fields!");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Please fill in all fields");
-                    alert.show();
-                }
+            if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
+                DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), toggleName);
+            } else {
+                System.out.println("Please fill all fields!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please fill in all fields");
+                alert.show();
             }
         });
 
-        btn_switchToLogin.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "login-view.fxml", "Log In!", null);
-            }
-        });
+        btn_switchToLogin.setOnAction(event -> DBUtils.changeScene(event, "login-view.fxml", "Log In!", null));
     }
 }
-

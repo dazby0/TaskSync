@@ -34,7 +34,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="btn_finishTask" layoutX="761.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="FINISH TASK">
+            <Button fx:id="btn_finishTask" layoutX="761.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="FINISH TASK" textFill="#252e40">
                <font>
                   <Font size="18.0" />
                </font>
@@ -42,7 +42,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btn_startTask" layoutX="622.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="START TASK">
+            <Button fx:id="btn_startTask" layoutX="622.0" layoutY="523.0" mnemonicParsing="false" style="-fx-background-color: #F2F2F2;" text="START TASK" textFill="#252e40">
                <font>
                   <Font size="18.0" />
                </font>
