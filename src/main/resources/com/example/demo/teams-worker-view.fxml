@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TeamsWorkerController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #F2F2F2;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.TeamsWorkerController">
    <children>
-      <Label layoutX="255.0" layoutY="153.0" text="sfasfguiuasf" />
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #252E40;">
+         <children>
+            <Button fx:id="btn_switchToMain" layoutX="787.0" layoutY="31.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="99.0" text="BACK">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+      <Label layoutX="188.0" layoutY="36.0" text="TEAMS YOU BELONG TO">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tab_workerTeams" layoutX="113.0" layoutY="156.0" prefHeight="388.0" prefWidth="674.0">
+        <columns>
+          <TableColumn fx:id="col_teamName" prefWidth="150.0" text="Team Name" />
+          <TableColumn fx:id="col_teamManager" prefWidth="156.0" text="Manager" />
+            <TableColumn fx:id="col_colleagues" prefWidth="367.0" text="Colleagues" />
+        </columns>
+      </TableView>
    </children>
-</AnchorPane>
+</Pane>

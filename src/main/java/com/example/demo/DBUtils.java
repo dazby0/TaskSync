@@ -281,7 +281,7 @@ public class DBUtils {
 
         try {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, assigned_by, time_spent FROM tasks WHERE assigned_to = ? ORDER BY assigned_date DESC");
+            preparedStatement = connection.prepareStatement("SELECT task_title, status, assigned_to, assigned_date, assigned_by, time_spent, finish_date FROM tasks WHERE assigned_to = ? ORDER BY assigned_date DESC");
             preparedStatement.setString(1, loggedUser.getUsername());
             resultSet = preparedStatement.executeQuery();
 
@@ -292,8 +292,9 @@ public class DBUtils {
                 String assignedDate = resultSet.getString("assigned_date");
                 String assignedBy = resultSet.getString("assigned_by");
                 String spentTime = resultSet.getString("time_spent");
+                String finishTime = resultSet.getString("finish_date");
 
-                tasks.add(new Task(taskTitle, status, assignedTo, assignedDate, spentTime, assignedBy, null));
+                tasks.add(new Task(taskTitle, status, assignedTo, assignedDate, spentTime, assignedBy, finishTime));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -339,6 +340,40 @@ public class DBUtils {
             }
         }
         return teams;
+    }
+
+    public static ObservableList<Team> loadWorkerTeams(String workerUsername) {
+        ObservableList<Team> workerTeams = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement("SELECT team_name, workers, manager FROM teams WHERE workers LIKE ?");
+            preparedStatement.setString(1, "%" + workerUsername + "%");
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String teamName = resultSet.getString("team_name");
+                String workers = resultSet.getString("workers");
+                String manager = resultSet.getString("manager");
+
+                workerTeams.add(new Team(manager, workers, teamName));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return workerTeams;
     }
 
     public static void updateStatus(Task task, String status, LocalDateTime startTime) {

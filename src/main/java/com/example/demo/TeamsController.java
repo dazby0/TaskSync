@@ -23,9 +23,9 @@ public class TeamsController implements Initializable, UserAware {
     TableView<Team> tab_teams;
 
     @FXML
-    TableColumn<Task, String> col_teamName;
+    TableColumn<Team, String> col_teamName;
     @FXML
-    TableColumn<Task, String> col_workers;
+    TableColumn<Team, String> col_workers;
 
     private LoggedUser loggedUser;
 

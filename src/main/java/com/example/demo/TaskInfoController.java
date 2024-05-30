@@ -47,6 +47,8 @@ public class TaskInfoController implements Initializable, UserAware {
             label_status.setText("Status: " + task.getStatus());
             label_assignedDate.setText("Assigned Date: " + task.getAssignedDate());
             label_assignedBy.setText("Assigned By: " + task.getAssignedBy());
+            label_timeSpent.setText("Time Spent: " + task.getTimeSpent());
+            label_finishDate.setText("Finish Date: "+ task.getFinishTime());
 
             switch (task.getStatus()) {
                 case "New":

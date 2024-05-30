@@ -39,6 +39,9 @@
             <font>
                 <Font size="18.0" />
             </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
         </Button>
         <TableView fx:id="tab_tasks" layoutX="211.0" layoutY="118.0" prefHeight="583.0" prefWidth="689.0">
             <columns>
