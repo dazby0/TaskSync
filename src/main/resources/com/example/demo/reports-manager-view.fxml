@@ -7,19 +7,43 @@
 
 <Pane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #252E40;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ReportsManagerController">
    <children>
-      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #f2f2f2;" />
+      <Pane layoutY="600.0" prefHeight="100.0" prefWidth="900.0" style="-fx-background-color: #f2f2f2;">
+         <children>
+            <Button fx:id="btn_switchToMain" layoutX="785.0" layoutY="30.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="90.0" style="-fx-background-color: #252E40;" text="BACK" textFill="#f2f2f2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children></Pane>
       <Label layoutX="67.0" layoutY="30.0" text="Average time of workers to complete a task" textFill="#f2f2f2">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <Button fx:id="btn_switchToMain" layoutX="818.0" layoutY="542.0" mnemonicParsing="false" style="-fx-background-color: #f2f2f2;" text="BACK">
+      <TableView fx:id="tab_workersAvgTime" layoutX="35.0" layoutY="180.0" prefHeight="370.0" prefWidth="360.0">
+        <columns>
+          <TableColumn fx:id="col_worker" prefWidth="165.0" text="Worker" />
+          <TableColumn fx:id="col_workerAvgTime" prefWidth="194.0" text="Average Time on Task" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tab_teamsAvgTime" layoutX="502.0" layoutY="180.0" prefHeight="370.0" prefWidth="360.0">
+        <columns>
+          <TableColumn fx:id="col_team" prefWidth="172.0" text="Team Name" />
+          <TableColumn fx:id="col_teamAvgTime" prefWidth="187.0" text="Average Time on Task" />
+        </columns>
+      </TableView>
+      <Label layoutX="135.0" layoutY="136.0" text="Single Workers" textFill="#f2f2f2">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+      </Label>
+      <Label layoutX="620.0" layoutY="136.0" text="Your Teams" textFill="#f2f2f2">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

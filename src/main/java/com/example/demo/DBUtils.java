@@ -497,7 +497,7 @@ public class DBUtils {
 
                 String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-                teamAverageTimes.add(new ReportAverageTime(teamName, timeFormatted));
+                teamAverageTimes.add(new ReportAverageTime(null, teamName, timeFormatted));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -513,6 +513,105 @@ public class DBUtils {
 
         return teamAverageTimes;
     }
+
+    public static ObservableList<ReportAverageTime> getTeamAverageTimesManager(String username) {
+        ObservableList<ReportAverageTime> teamAverageTimes = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            // Modified SQL query to consider teams where the manager is logged user
+            preparedStatement = connection.prepareStatement(
+                    "SELECT t.team_name, AVG(TIME_TO_SEC(ta.time_spent)) AS average_time_spent " +
+                            "FROM teams t " +
+                            "JOIN tasks ta ON FIND_IN_SET(ta.assigned_to, t.workers) " +
+                            "WHERE t.manager = ? AND ta.status = 'Finished' AND ta.assigned_by = t.manager " +
+                            "GROUP BY t.team_name"
+            );
+
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String teamName = resultSet.getString("team_name");
+                long averageTimeSpentSeconds = resultSet.getLong("average_time_spent");
+
+                long hours = averageTimeSpentSeconds / 3600;
+                long minutes = (averageTimeSpentSeconds % 3600) / 60;
+                long seconds = averageTimeSpentSeconds % 60;
+
+                String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+                teamAverageTimes.add(new ReportAverageTime(null, teamName, timeFormatted));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return teamAverageTimes;
+    }
+
+
+    public static ObservableList<ReportAverageTime> getWorkersAverageTimesManager(String username) {
+        ObservableList<ReportAverageTime> workersAverageTimes = FXCollections.observableArrayList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            preparedStatement = connection.prepareStatement(
+                    "SELECT u.username, AVG(TIME_TO_SEC(ta.time_spent)) AS average_time_spent " +
+                            "FROM users u " +
+                            "JOIN teams t ON FIND_IN_SET(u.username, t.workers) " +
+                            "JOIN tasks ta ON FIND_IN_SET(u.username, ta.assigned_to) " +
+                            "WHERE t.manager = ? AND ta.status = 'Finished' AND ta.assigned_by = t.manager " +
+                            "GROUP BY u.username"
+            );
+
+
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String workerUsername = resultSet.getString("username");
+                long averageTimeSpentSeconds = resultSet.getLong("average_time_spent");
+
+                long hours = averageTimeSpentSeconds / 3600;
+                long minutes = (averageTimeSpentSeconds % 3600) / 60;
+                long seconds = averageTimeSpentSeconds % 60;
+
+                String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+                workersAverageTimes.add(new ReportAverageTime(workerUsername, null, timeFormatted));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return workersAverageTimes;
+    }
+
 }
 
 
