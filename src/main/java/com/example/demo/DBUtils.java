@@ -21,8 +21,8 @@ import java.time.format.DateTimeFormatter;
 
 public class DBUtils {
 
-    private static final String DB_URL = "";
-    private static final String DB_USER = "";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/tasksync";
+    private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
     private static Connection getConnection() throws SQLException {
