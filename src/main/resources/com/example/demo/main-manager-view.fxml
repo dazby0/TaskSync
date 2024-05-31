@@ -49,12 +49,12 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <TableView fx:id="tab_tasks" layoutX="189.0" layoutY="114.0" prefHeight="586.0" prefWidth="711.0" style="-fx-background-color: #f2f2f2;">
+      <TableView fx:id="tab_tasks" layoutX="190.0" layoutY="114.0" prefHeight="586.0" prefWidth="710.0" style="-fx-background-color: #f2f2f2;">
         <columns>
           <TableColumn fx:id="col_taskName" prefWidth="114.0" text="Task Name" />
           <TableColumn fx:id="col_status" prefWidth="96.0" text="Status" />
             <TableColumn fx:id="col_assignedTo" prefWidth="123.0" text="Assigned To" />
-            <TableColumn fx:id="col_startDate" prefWidth="163.0" text="Start Date" />
+            <TableColumn fx:id="col_startDate" prefWidth="163.0" text="Assigned Date" />
             <TableColumn fx:id="col_spentTime" prefWidth="136.0" text="Time Spent" />
             <TableColumn fx:id="col_taskInfo" prefWidth="78.0" text="Task Info" />
         </columns>

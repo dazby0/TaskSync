@@ -47,7 +47,7 @@
             <columns>
                 <TableColumn fx:id="col_taskName" prefWidth="88.0" text="Task Name" />
                 <TableColumn fx:id="col_status" prefWidth="90.0" text="Status" />
-                <TableColumn fx:id="col_startDate" prefWidth="153.0" text="Start Date" />
+                <TableColumn fx:id="col_startDate" prefWidth="153.0" text="Assigned Date" />
                 <TableColumn fx:id="col_spentTime" prefWidth="141.0" text="Time Spent" />
                 <TableColumn fx:id="col_assignedBy" prefWidth="137.0" text="Assigned By" />
                 <TableColumn fx:id="col_info" prefWidth="79.0" text="Info" />
