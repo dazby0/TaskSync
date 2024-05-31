@@ -79,9 +79,9 @@ After launching the application, the login view will appear, from which you can 
   <img src="https://github.com/dazby0/TaskSync/assets/91540933/00aadd5c-c179-49cb-a7cb-3fc785d00a77" alt="Teams View" width="450" height="350"> <br />
   <img src="https://github.com/dazby0/TaskSync/assets/91540933/1cf904b9-22e0-4ecf-b84e-9df94d545144" alt="Teams View" width="280" height="218">
   <img src="https://github.com/dazby0/TaskSync/assets/91540933/7bcf8853-dbdf-4e29-8e9a-407ea5114ffe" alt="Teams View" width="280" height="218">
-  <img src="https://github.com/dazby0/TaskSync/assets/91540933/15c50da7-dff6-47b1-8e2f-1a146eabd693" alt="Teams View" width="280" height="218"> <br />
+  <img src="https://github.com/dazby0/TaskSync/assets/91540933/15c50da7-dff6-47b1-8e2f-1a146eabd693" alt="Teams View" width="280" height="218"> <br /> 
 
-- **Teams:** Checking membership in teams and viewing colleagues.
+- **Teams:** Checking membership in teams and viewing colleagues. <br />
   <img src="https://github.com/dazby0/TaskSync/assets/91540933/b5d3d3db-a4ac-4036-86ea-638bef6213f9" alt="Teams View" width="450" height="350"> <br />
   
 - **Reports:** Average task completion time by the logged-in employee and the teams they belong to.
