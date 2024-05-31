@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Models;
 
 public class Task {
     private String taskName;

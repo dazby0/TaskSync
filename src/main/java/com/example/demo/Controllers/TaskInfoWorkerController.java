@@ -1,5 +1,10 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.*;
+import com.example.demo.Interfaces.UserAware;
+import com.example.demo.Models.LoggedUser;
+import com.example.demo.Models.SharedService;
+import com.example.demo.Models.Task;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

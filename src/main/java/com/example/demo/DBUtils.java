@@ -1,5 +1,10 @@
 package com.example.demo;
 
+import com.example.demo.Interfaces.UserAware;
+import com.example.demo.Models.LoggedUser;
+import com.example.demo.Models.ReportAverageTime;
+import com.example.demo.Models.Task;
+import com.example.demo.Models.Team;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -70,7 +75,6 @@ public class DBUtils {
             resultSet = psCheckUserExists.executeQuery();
 
             if (resultSet.isBeforeFirst()) {
-                System.out.println("User already exists!");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("You can't use this username");
                 alert.show();
@@ -109,7 +113,6 @@ public class DBUtils {
             resultSet = preparedStatement.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
-                System.out.println("User not found");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Provided credentials are incorrect");
                 alert.show();
@@ -126,7 +129,6 @@ public class DBUtils {
                             changeScene(event, "main-worker-view.fxml", "Welcome worker!", loggedUser);
                         }
                     } else {
-                        System.out.println("Passwords did not match");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("The provided credentials are incorrect");
                         alert.show();

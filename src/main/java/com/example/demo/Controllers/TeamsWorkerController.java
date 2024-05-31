@@ -1,5 +1,9 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.DBUtils;
+import com.example.demo.Models.LoggedUser;
+import com.example.demo.Models.Team;
+import com.example.demo.Interfaces.UserAware;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

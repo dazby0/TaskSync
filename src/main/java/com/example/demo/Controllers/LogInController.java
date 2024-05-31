@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.DBUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

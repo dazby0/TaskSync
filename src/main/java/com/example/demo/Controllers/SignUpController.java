@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.DBUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -46,7 +47,6 @@ public class SignUpController implements Initializable {
             if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
                 DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), toggleName);
             } else {
-                System.out.println("Please fill all fields!");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Please fill in all fields");
                 alert.show();

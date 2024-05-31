@@ -1,5 +1,10 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.*;
+import com.example.demo.Interfaces.UserAware;
+import com.example.demo.Models.LoggedUser;
+import com.example.demo.Models.SharedService;
+import com.example.demo.Models.Task;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,15 +16,13 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable, UserAware {
+public class MainWorkerController implements Initializable, UserAware {
     @FXML
     private Button btn_logout;
     @FXML
-    private Button btn_addTask;
+    private Button btn_yourTeams;
     @FXML
-    private Button btn_switchToTeams;
-    @FXML
-    private Button btn_switchToReports;
+    private Button btn_workerReports;
     @FXML
     private Label label_welcome;
     @FXML
@@ -29,28 +32,28 @@ public class MainController implements Initializable, UserAware {
     @FXML
     private TableColumn<Task, String> col_status;
     @FXML
-    private TableColumn<Task, String> col_assignedTo;
-    @FXML
     private TableColumn<Task, String> col_startDate;
     @FXML
     private TableColumn<Task, String> col_spentTime;
     @FXML
-    private TableColumn<Task, Void> col_taskInfo;
+    private TableColumn<Task, String> col_assignedBy;
+    @FXML
+    private TableColumn<Task, Void> col_info;
 
     private LoggedUser loggedUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupColumns();
         setupButtonActions();
+        setupColumns();
         setupTaskTableView();
     }
 
     private void setupColumns() {
         col_taskName.setCellValueFactory(new PropertyValueFactory<>("taskName"));
         col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
-        col_assignedTo.setCellValueFactory(new PropertyValueFactory<>("assignedTo"));
         col_startDate.setCellValueFactory(new PropertyValueFactory<>("assignedDate"));
+        col_assignedBy.setCellValueFactory(new PropertyValueFactory<>("assignedBy"));
         col_spentTime.setCellValueFactory(param -> {
             Task task = param.getValue();
             if ("Finished".equals(task.getStatus())) {
@@ -63,16 +66,12 @@ public class MainController implements Initializable, UserAware {
 
     private void setupButtonActions() {
         btn_logout.setOnAction(event -> DBUtils.changeScene(event, "login-view.fxml", "Log In to TaskSync!", null));
-        btn_addTask.setOnAction(event -> {
-            DBUtils.changeScene(event, "add-task-view.fxml", "Add New Task!", loggedUser);
-            System.out.println(loggedUser.getUsername());
-        });
-        btn_switchToTeams.setOnAction(event -> DBUtils.changeScene(event, "teams-manager-view.fxml", "Your teams!", loggedUser));
-        btn_switchToReports.setOnAction(event -> DBUtils.changeScene(event, "reports-manager-view.fxml", "View Reports!", loggedUser));
+        btn_yourTeams.setOnAction(event -> DBUtils.changeScene(event, "teams-worker-view.fxml", "Check your teams!", loggedUser));
+        btn_workerReports.setOnAction(event -> DBUtils.changeScene(event, "reports-worker-view.fxml", "Look at Your Reports!", loggedUser));
     }
 
     private void setupTaskTableView() {
-        col_taskInfo.setCellFactory(param -> new TableCell<>() {
+        col_info.setCellFactory(param -> new TableCell<>() {
             private final Button btnMore = new Button("More...");
             private final HBox pane = new HBox(btnMore);
 
@@ -80,7 +79,7 @@ public class MainController implements Initializable, UserAware {
                 btnMore.setOnAction(event -> {
                     Task task = getTableView().getItems().get(getIndex());
                     SharedService.getInstance().setCurrentTask(task);
-                    DBUtils.changeScene(event, "task-info-manager-view.fxml", "Task Information", loggedUser);
+                    DBUtils.changeScene(event, "task-info-worker-view.fxml", "Task Information", loggedUser);
                 });
             }
 
@@ -112,19 +111,19 @@ public class MainController implements Initializable, UserAware {
         });
     }
 
-    private void loadTasks() {
-        ObservableList<Task> tasks = DBUtils.loadTasks();
-        tab_tasks.setItems(tasks);
-    }
-
     @Override
     public void setLoggedUser(LoggedUser loggedUser) {
         this.loggedUser = loggedUser;
-        setUserInformation(loggedUser);
-        loadTasks();
+        setUserInformation();
+        loadYourTasks();
     }
 
-    public void setUserInformation(LoggedUser loggedUser) {
+    private void setUserInformation() {
         label_welcome.setText("Hello " + loggedUser.getUsername() + "!");
+    }
+
+    private void loadYourTasks() {
+        ObservableList<Task> tasks = DBUtils.loadYourTasks(loggedUser);
+        tab_tasks.setItems(tasks);
     }
 }

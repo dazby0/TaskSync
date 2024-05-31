@@ -1,7 +1,10 @@
-package com.example.demo;
+package com.example.demo.Controllers;
 
+import com.example.demo.DBUtils;
+import com.example.demo.Models.LoggedUser;
+import com.example.demo.Models.ReportAverageTime;
+import com.example.demo.Interfaces.UserAware;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
